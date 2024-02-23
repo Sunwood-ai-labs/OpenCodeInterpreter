@@ -1,143 +1,140 @@
-**Read in other language: [中文](README_CN.md).**
-
 # Local-Code-Interpreter
-A local implementation of OpenAI's ChatGPT Code Interpreter (Advanced Data Analysis).
 
-## Introduction
+OpenAIのChatGPTコードインタープリター（高度なデータ分析）のローカル実装です。
 
-OpenAI's Code Interpreter (currently renamed as Advanced Data Analysis) for ChatGPT is a revolutionary feature that allows the execution of Python code within the AI model. However, it execute code within an online sandbox and has certain limitations. In this project, we present Local Code Interpreter – which enables code execution on your local device, offering enhanced flexibility, security, and convenience.
-![notebook_gif_demo](example_img/save_to_notebook_demo.gif)
+## 紹介
 
-## Key Advantages
+OpenAIのコードインタープリター（現在は高度なデータ分析として改名されました）は、AIモデル内でPythonコードを実行する画期的な機能を提供します。しかし、オンラインのサンドボックス内でコードを実行するため、いくつかの制限があります。このプロジェクトでは、ローカルデバイスでコード実行を可能にするLocal Code Interpreterを紹介します。これにより、柔軟性、セキュリティ、便利さが向上します。
+![notebook_gif_demo](https://raw.githubusercontent.com/Sunwood-ai-labs/OpenCodeInterpreter/main/data_collection/Local-Code-Interpreter/example_img/save_to_notebook_demo.gif) 
 
-- **Custom Environment**: Execute code in a customized environment of your choice, ensuring you have the right packages and settings.
+## 主な利点 
+- **カスタム環境** : 必要なパッケージと設定を備えた、選択したカスタマイズ環境でコードを実行します。 
+- **シームレスな体験** : ファイルサイズの制限やアップロード時のインターネットの問題とはお別れです。Local Code Interpreterを使用すると、完全にコントロールできます。 
+- **GPT-3.5の利用可能性** : 公式のコードインタープリターがGPT-4モデルでのみ利用可能である一方、Local Code InterpreterはGPT-3.5とGPT-4モデルの間で柔軟に切り替えることができます。 
+- **強化されたデータセキュリティ** : コードをローカルで実行することで、インターネット上でのデータ転送を最小限に抑え、データをより安全に保ちます。 
+- **Jupyterサポート** : すべてのコードと会話履歴をJupyterノートブックに保存して、将来的な使用のために保持できます。
 
-- **Seamless Experience**: Say goodbye to file size restrictions and internet issues while uploading. With Local Code Interpreter, you're in full control.
+## 注意
 
-- **GPT-3.5 Availability**: While official Code Interpreter is only available for GPT-4 model, the Local Code Interpreter offers the flexibility to switch between both GPT-3.5 and GPT-4 models.
+人間のレビューなしにAIが生成したコードを自分のデバイスで実行することは安全ではありません。このプログラムを起動する前に、デバイスとデータのセキュリティを保護するための措置（仮想マシンの使用など）を講じる責任があります。このプログラムの使用によって発生したすべての結果は、自身で負担するものとします。
+## 使用方法
+### インストール 
+1. このリポジトリをローカルデバイスにクローンします。
 
-- **Enhanced Data Security**: Keep your data more secure by running code locally, minimizing data transfer over the internet.
+```shell
+git clone https://github.com/MrGreyfun/Local-Code-Interpreter.git
+cd Local-Code-Interpreter
+``` 
+2. 必要な依存関係をインストールします。このプログラムはWindows 10とCentOS Linux 7.8でテストされており、Python 3.9.16が必要です。必要なパッケージには以下が含まれます：
 
-- **Jupyter Support**: You can save all the code and conversation history in a Jupyter notebook for future use.
+```text
+Jupyter Notebook    6.5.4
+gradio              3.39.0
+openai              0.27.8
+ansi2html           1.8.0
+tiktoken            0.3.3
+Pillow              9.4.0
+```
 
-## Note
-Executing AI-generated code without human review on your own device is not safe. You are responsible for taking measures to protect the security of your device and data (such as using a virtural machine) before launching this program. All consequences caused by using this program shall be borne by youself.
 
-## Usage
 
-### Installation
+他のシステムやパッケージのバージョンでも動作する場合があります。`openai`パッケージを最新の`1.x`バージョンに更新しないでください。これは書き直されており、古いバージョンと互換性がありません。
+必要なパッケージを直接インストールするには、次のコマンドを使用します：
 
-1. Clone this repository to your local device
-   ```shell
-   git clone https://github.com/MrGreyfun/Local-Code-Interpreter.git
-   cd Local-Code-Interpreter
-   ```
+```shell
+pip install -r requirements.txt
+```
 
-2. Install the necessary dependencies. The program has been tested on Windows 10 and CentOS Linux 7.8, with Python 3.9.16. Required packages include:
-   ```text
-   Jupyter Notebook    6.5.4
-   gradio              3.39.0
-   openai              0.27.8
-   ansi2html           1.8.0
-   tiktoken            0.3.3
-   Pillow              9.4.0
-   ```
-   Other systems or package versions may also work. Please note that you should not update the `openai` package to the latest `1.x` version, as it has been rewritten and is not compatible with older versions.
-   You can use the following command to directly install the required packages:
-   ```shell
-   pip install -r requirements.txt
-   ```
-   For newcomers to Python, we offer a convenient command that installs additional packages commonly used for data processing and analysis:
-   ```shell
-   pip install -r requirements_full.txt
-   ```
-### Configuration
 
-1. Create a `config.json` file in the `src` directory, following the examples provided in the `config_example` directory.
 
-2. Configure your API key in the `config.json` file.
+Pythonの初心者向けに、データ処理と分析に一般的に使用される追加パッケージをインストールする便利なコマンドも提供しています：
 
-Please Note:
-1. **Set the `model_name` Correctly**
-    This program relies on the function calling capability of the `0613` or newer versions of models:
-    - `gpt-3.5-turbo-0613` (and its 16K version)
-    - `gpt-3.5-turbo-1106`
-    - `gpt-4-0613` (and its 32K version)
-    - `gpt-4-1106-preview` 
+```shell
+pip install -r requirements_full.txt
+```
+### 設定 
+1. `src`ディレクトリに`config.json`ファイルを作成し、`config_example`ディレクトリに提供されている例に従います。 
+2. `config.json`ファイルでAPIキーを設定します。
 
-    Older versions of the models will not work. Note that `gpt-4-vision-preview` lacks support for function calling, therefore, it should not be set as `GPT-4` model. 
+注意事項： 
+1. **を正しく設定する** 
+このプログラムは`0613`またはそれ以降のバージョンのモデルの関数呼び出し機能に依存しています： 
+- `gpt-3.5-turbo-0613`（およびその16Kバージョン） 
+- `gpt-3.5-turbo-1106` 
+- `gpt-4-0613`（およびその32Kバージョン） 
+- `gpt-4-1106-preview`
 
-    For Azure OpenAI service users:
-    - Set the `model_name` as your deployment name.
-    - Confirm that the deployed model corresponds to the `0613` or newer version.
+古いバージョンのモデルでは動作しません。`gpt-4-vision-preview`は関数呼び出しをサポートしていないため、`GPT-4`モデルとして設定すべきではありません。
 
-2. **API Version Settings**
-    If you're using Azure OpenAI service, set the `API_VERSION` to `2023-12-01-preview` in the `config.json` file. Note that API versions older than `2023-07-01-preview` do not support the necessary function calls for this program and `2023-12-01-preview` is recommended as older versions will be deprecated in the near future.
+Azure OpenAIサービスのユーザーの場合： 
+- `model_name`をデプロイメント名として設定します。 
+- デプロイされたモデルが`0613`またはそれ以降のバージョンに対応していることを確認します。 
+2. **APIバージョン設定** 
+Azure OpenAIサービスを使用している場合は、`config.json`ファイルで`API_VERSION`を`2023-12-01-preview`に設定します。`2023-07-01-preview`より古いAPIバージョンは、このプログラムに必要な関数呼び出しをサポートしていないため、`2023-12-01-preview`が推奨されます。古いバージョンは近い将来廃止される予定です。 
+3. **ビジョンモデル設定** 
+現在、`gpt-4-vision-preview`は関数呼び出しをサポートしていませんが、非エンドツーエンドのアプローチを使用してビジョン入力を実装しています。ビジョン入力を有効にするには、`gpt-4-vision-preview`を`GPT-4V`モデルとして設定し、`available`を`true`に設定します。逆に、必要ない場合は`available`を`false`に設定することでビジョン入力を無効にし、ビジョン関連のシステムプロンプトを削除し、APIコストを削減します。
+![vision_demo](https://raw.githubusercontent.com/Sunwood-ai-labs/OpenCodeInterpreter/main/data_collection/Local-Code-Interpreter/example_img/vision_example.jpg) 
+4. **モデルコンテキストウィンドウ設定** 
+`model_context_window`フィールドは、各モデルのコンテキストウィンドウを記録し、会話がモデルのコンテキストウィンドウ容量を超えた場合にプログラムが会話を分割するために使用します。
+Azure OpenAIサービスのユーザーは、以下の形式を使用してモデルのデプロイメント名を使用してコンテキストウィンドウ情報を手動で挿入する必要があります：
 
-3. **Vision Model Settings**
-    Despite the `gpt-4-vision-preview` currently does not support function calling, we have implemented vision input using a non-end-to-end approach. To enable vision input, set `gpt-4-vision-preview` as `GPT-4V` model and set `available` to `true`.  Conversely, setting `available` to `false` to disables vision input when unnecessary, which will remove vision-related system prompts and reduce your API costs.
-    ![vision_demo](example_img/vision_example.jpg)
-4. **Model Context Window Settings**
-    The `model_context_window` field records the context window for each model, which the program uses to slice conversations when they exceed the model's context window capacity. 
-    Azure OpenAI service users should manually insert context window information using the model's deployment name in the following format:
-    ```json
-    "<YOUR-DEPLOYMENT-NAME>": <contex_window (integer)>
-    ```
-   
-    Additionally, when OpenAI introduce new models, you can manually append the new model's context window information using the same format. (We will keep this file updated, but there might be delays)
+```json
+"<YOUR-DEPLOYMENT-NAME>": <contex_window (integer)>
+```
 
-5. **Alternate API Key Handling**
-    If you prefer not to store your API key in the `config.json` file, you can opt for an alternate approach:
-    - Leave the `API_KEY` field in `config.json` as an empty string:
-        ```json
-        "API_KEY": ""
-        ```
-    - Set the environment variable `OPENAI_API_KEY` with your API key before running the program:
-        - On Windows:
-        ```shell
-        set OPENAI_API_KEY=<YOUR-API-KEY>
-        ```
-        - On Linux:
-        ```shell
-        export OPENAI_API_KEY=<YOUR-API-KEY>
-        ```
 
-## Getting Started
 
-1. Navigate to the `src` directory.
-   ```shell
-   cd src
-   ```
+さらに、OpenAIが新しいモデルを導入した場合、同じ形式を使用して新しいモデルのコンテキストウィンドウ情報を手動で追加できます。（このファイルは更新されますが、遅れが生じる可能性があります） 
+5. **代替APIキー処理** 
+`config.json`ファイルにAPIキーを保存したくない場合は、代替のアプローチを選択できます： 
+- `config.json`の`API_KEY`フィールドを空の文字列として残します：
 
-2. Run the command:
-   ```shell
-   python web_ui.py
-   ```
+```json
+"API_KEY": ""
+``` 
+- プログラムを実行する前に環境変数`OPENAI_API_KEY`にAPIキーを設定します：
+- Windowsの場合：
 
-3. Access the generated link in your browser to start using the Local Code Interpreter.
+```shell
+set OPENAI_API_KEY=<YOUR-API-KEY>
+```
 
-4. Use the `-n` or `--notebook` option to save the conversation in a Jupyter notebook.
-   By default, the notebook is saved in the working directory, but you can add a path to save it elsewhere.
-   ```shell
-   python web_ui.py -n <path_to_notebook>
-   ```
 
-## Example
+- Linuxの場合：
 
-Imagine uploading a data file and requesting the model to perform linear regression and visualize the data. See how Local Code Interpreter provides a seamless experience:
+```shell
+export OPENAI_API_KEY=<YOUR-API-KEY>
+```
+## はじめに 
+1. `src`ディレクトリに移動します。
 
-1. Upload the data and request linear regression:
-   ![Example 1](example_img/1.jpg)
+```shell
+cd src
+``` 
+2. 次のコマンドを実行します：
 
-2. Encounter an error in the generated code:
-   ![Example 2](example_img/2.jpg)
+```shell
+python web_ui.py
+``` 
+3. ブラウザで生成されたリンクにアクセスして、Local Code Interpreterの使用を開始します。 
+4. `-n`または`--notebook`オプションを使用して、会話をJupyterノートブックに保存します。
+デフォルトでは、ノートブックは作業ディレクトリに保存されますが、パスを追加して他の場所に保存することもできます。
 
-3. ChatGPT automatically checks the data structure and fixes the bug:
-   ![Example 3](example_img/3.jpg)
+```shell
+python web_ui.py -n <path_to_notebook>
+```
+## 例
 
-4. The corrected code runs successfully:
-   ![Example 4](example_img/4.jpg)
+データファイルをアップロードして、モデルに線形回帰を実行してデータを可視化するように依頼する場面を想像してください。Local Code Interpreterがシームレスな体験を提供する方法をご覧ください： 
+1. データをアップロードして線形回帰をリクエストします：
+![Example 1](https://raw.githubusercontent.com/Sunwood-ai-labs/OpenCodeInterpreter/main/data_collection/Local-Code-Interpreter/example_img/1.jpg) 
+2. 生成されたコードでエラーが発生します：
+![Example 2](https://raw.githubusercontent.com/Sunwood-ai-labs/OpenCodeInterpreter/main/data_collection/Local-Code-Interpreter/example_img/2.jpg) 
+3. ChatGPTが自動的にデータ構造をチェックしてバグを修正します：
+![Example 3](https://raw.githubusercontent.com/Sunwood-ai-labs/OpenCodeInterpreter/main/data_collection/Local-Code-Interpreter/example_img/3.jpg) 
+4. 修正されたコードが正常に実行されます：
+![Example 4](https://raw.githubusercontent.com/Sunwood-ai-labs/OpenCodeInterpreter/main/data_collection/Local-Code-Interpreter/example_img/4.jpg) 
+5. 最終結果が要件を満たします：
+![Example 5](https://raw.githubusercontent.com/Sunwood-ai-labs/OpenCodeInterpreter/main/data_collection/Local-Code-Interpreter/example_img/5.jpg) 
 
-5. The final result meets your requirements:
-   ![Example 5](example_img/5.jpg)
-   ![Example 6](example_img/6.jpg)
+![Example 6](https://raw.githubusercontent.com/Sunwood-ai-labs/OpenCodeInterpreter/main/data_collection/Local-Code-Interpreter/example_img/6.jpg)---
