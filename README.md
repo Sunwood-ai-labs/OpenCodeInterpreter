@@ -1,8 +1,10 @@
 <h1>
 <img src="https://raw.githubusercontent.com/Sunwood-ai-labs/OpenCodeInterpreter/main/docs/icon.png" height=300px align="right"/>
-OpenCodeInterpreter: <br>Integrating Code Generation with Execution and Refinement
+OpenCodeInterpreter: <br>
 </h1>
-
+<h2>
+Integrating Code Generation with Execution and Refinement
+</h2>
 
 <p align="center">
 <img width="1000px" alt="OpenCodeInterpreter" src="https://opencodeinterpreter.github.io/static/images/figure1.png">
