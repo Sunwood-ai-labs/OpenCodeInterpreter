@@ -1,4 +1,8 @@
-# OpenCodeInterpreter: Integrating Code Generation with Execution and Refinement
+<h1>
+<img src="https://raw.githubusercontent.com/Sunwood-ai-labs/Harina/main/docs/harina_icon.png" height=300px align="right"/>
+OpenCodeInterpreter: Integrating Code Generation with Execution and Refinement
+</h1>
+
 
 <p align="center">
 <img width="1000px" alt="OpenCodeInterpreter" src="https://opencodeinterpreter.github.io/static/images/figure1.png">
