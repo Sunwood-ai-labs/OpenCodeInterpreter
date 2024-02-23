@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  local-code-interpreter:
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    ports:
+      - "7860:7860" # Jupyter Notebookにアクセスするためのポートをマッピング
+    tty: true
+    # command: jupyter notebook --ip=0.0.0.0 --allow-root --NotebookApp.token='' --NotebookApp.password=''
