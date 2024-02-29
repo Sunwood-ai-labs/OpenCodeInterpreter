@@ -1,0 +1,5 @@
+
+data_collection/Local-Code-Interpreter/.env
+*.pyc
+*.log
+**/cache/**

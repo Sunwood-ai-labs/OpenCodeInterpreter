@@ -276,4 +276,4 @@ if __name__ == '__main__':
         block.load(fn=initialization, inputs=[state])
 
     block.queue()
-    block.launch(inbrowser=True)
+    block.launch(inbrowser=True, share=True)
