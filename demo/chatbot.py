@@ -32,7 +32,8 @@ JSON_DATASET_DIR = Path("json_dataset")
 JSON_DATASET_DIR.mkdir(parents=True, exist_ok=True)
 
 scheduler = CommitScheduler(
-    repo_id="opencodeinterpreter_user_data",
+    repo_id="MakiAi/opencodeinterpreter_user_data",
+    # repo_id="m-a-p/OpenCodeInterpreter-DS-6.7B",
     repo_type="dataset",
     folder_path=JSON_DATASET_DIR,
     path_in_repo="data",
