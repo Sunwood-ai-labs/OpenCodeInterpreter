@@ -30,6 +30,8 @@ class OpenCodeInterpreter(BaseCodeInterpreter):
         load_in_8bit: bool = False,
         load_in_4bit: bool = False,
     ):
+
+        print(f">>>> model_path:{model_path}")
         # build tokenizer
         self.tokenizer = AutoTokenizer.from_pretrained(
             model_path,
