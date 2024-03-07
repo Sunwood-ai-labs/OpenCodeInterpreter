@@ -36,7 +36,9 @@ class OpenCodeInterpreter(BaseCodeInterpreter):
         self.tokenizer = AutoTokenizer.from_pretrained(
             model_path,
             padding_side="right",
-            trust_remote_code=True
+            trust_remote_code=True,
+            device_map="auto",
+            offload_folder="save_folder"
         )
 
         self.model = AutoModelForCausalLM.from_pretrained(
