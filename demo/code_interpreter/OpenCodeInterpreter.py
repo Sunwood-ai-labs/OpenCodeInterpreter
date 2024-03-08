@@ -36,10 +36,10 @@ class OpenCodeInterpreter(BaseCodeInterpreter):
         self.tokenizer = AutoTokenizer.from_pretrained(
             model_path,
             padding_side="right",
-            trust_remote_code=True,
-            device_map="auto",
-            offload_folder="save_folder"
+            trust_remote_code=True
         )
+
+
 
         self.model = AutoModelForCausalLM.from_pretrained(
             model_path,
@@ -47,7 +47,9 @@ class OpenCodeInterpreter(BaseCodeInterpreter):
             load_in_4bit=load_in_4bit,
             load_in_8bit=load_in_8bit,
             torch_dtype=torch.float16,
-            trust_remote_code=True
+            # offload_state_dict = True,
+            # offload_folder="save_folder",
+            trust_remote_code=True,
         )
 
         self.model.resize_token_embeddings(len(self.tokenizer))
