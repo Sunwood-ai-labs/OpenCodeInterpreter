@@ -4,3 +4,4 @@ data_collection/Local-Code-Interpreter/.env
 *.log
 **/.cache/**
 .env
+data_collection/Local-Code-Interpreter/src/cache/work_dir_140360844096032/train.csv
