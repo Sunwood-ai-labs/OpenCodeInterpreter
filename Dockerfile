@@ -6,7 +6,8 @@ FROM nvidia/cuda:12.0.1-cudnn8-runtime-ubuntu22.04
 WORKDIR /app
 
 # Copy requirements file
-COPY ./demo/requirements.txt /app/requirements.txt
+# COPY ./demo/requirements.txt /app/requirements.txt
+COPY ./demo/requirements.dev.txt /app/requirements.txt
 
 # Install Python and pip
 RUN apt-get update && apt-get install -y python3 python3-pip
