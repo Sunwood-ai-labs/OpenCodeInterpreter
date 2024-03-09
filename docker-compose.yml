@@ -8,5 +8,8 @@ services:
       - .:/app
       - ./.cache:/root/.cache
     tty: true
+    working_dir: /app/demo
+    command: python3 chatbot.py --path  m-a-p/OpenCodeInterpreter-DS-6.7B
     ports:
       - "9000:8000"
+      - "7860:7860"
