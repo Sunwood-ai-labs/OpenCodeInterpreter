@@ -299,7 +299,7 @@ def gradio_launch(model_path: str, MAX_TRY: int = 3):
         clear.click(partial(clear_history, interpreter=interpreter), [session_state, jupyter_state, dialog_info], [chatbot, session_state, jupyter_state, dialog_info], queue=False)
 
     demo.queue(max_size=20)
-    demo.launch(share=True)
+    demo.launch(share=True, server_name="0.0.0.0")
 
 
 if __name__ == "__main__":
